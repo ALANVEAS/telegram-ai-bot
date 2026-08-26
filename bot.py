@@ -3,7 +3,7 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher, F, types
 from aiogram.fsm.storage.memory import MemoryStorage
-from google import genai
+import google.generativeai as genai
 
 # Вставь сюда токен своего бота из Telegram (от BotFather)
 # Берем ключи из защищенных переменных окружения Render
@@ -13,7 +13,8 @@ bot = Bot(token=TELEGRAM_TOKEN)
 dp = Dispatcher(storage=MemoryStorage())
 
 # Инициализируем клиента Google GenAI
-client = genai.Client(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY)
+model = genai.GenerativeModel("gemini-1.5-flash")
 
 # Память для диалогов: {user_id: [история сообщений]}
 user_histories = {}
